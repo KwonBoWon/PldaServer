@@ -15,6 +15,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,14 +27,14 @@ import java.security.GeneralSecurityException;
 @RequestMapping(value = "/youtube")
 public class YoutubeTest {
     @Value("${youtube.api-key}")
-    private String DEVELOPER_KEY;
+    private String DEVELOPER_KEY = "AIzaSyDkwZaDAkNrnZ-nabEzFe1qe2SDe99WnaY";
     @Value("${youtube.application-name}")
-    private String APPLICATION_NAME = "My Maps Project";
+    private String APPLICATION_NAME;
     public final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
 
     @PostMapping("/post")
-    public void youtubeSearch(@RequestBody String request)
+    public ResponseEntity<?> youtubeSearch(@RequestBody String request)
             throws GeneralSecurityException, IOException, GoogleJsonResponseException {
         YoutubeTest youtubeTest = new YoutubeTest();
         YouTube youtubeService = youtubeTest.getService();
@@ -46,6 +47,7 @@ public class YoutubeTest {
                 .setQ(request)
                 .execute();
         System.out.println(response);
+        return ResponseEntity.ok(response);
     }
 
 
@@ -63,24 +65,4 @@ public class YoutubeTest {
                 .build();
     }
 
-    /**
-     * Call function to create API service object. Define and
-     * execute API request. Print API response.
-     *
-     * @throws GeneralSecurityException, IOException, GoogleJsonResponseException
-     */
-    public static void main(String[] args)
-            throws GeneralSecurityException, IOException, GoogleJsonResponseException {
-        YoutubeTest youtubeTest = new YoutubeTest();
-        YouTube youtubeService = youtubeTest.getService();
-
-        // Define and execute the API request
-        YouTube.Search.List request = youtubeService.search()
-                .list("snippet");
-        SearchListResponse response = request.setKey(youtubeTest.DEVELOPER_KEY)
-                .setMaxResults(2L)
-                .setQ("request")
-                .execute();
-        System.out.println(response);
-    }
 }

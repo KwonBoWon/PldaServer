@@ -24,9 +24,10 @@ public class GptTest {
                 .model("text-davinci-003")
                 .echo(false)
                 .maxTokens(100)
+                .temperature(0.7)
                 .build();
         service.createCompletion(completionRequest).getChoices().forEach(System.out::println);
-        return ResponseEntity.ok(service.createCompletion(completionRequest).getChoices());
+        return ResponseEntity.ok(service.createCompletion(completionRequest).getChoices().get(0));
     }
 
 }
