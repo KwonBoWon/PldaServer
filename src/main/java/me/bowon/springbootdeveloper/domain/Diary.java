@@ -37,5 +37,9 @@ public class Diary {
         this.userCode = userCode;
         this.content = content;
     }
+    public void update(String userCode, String content){
+        this.userCode = userCode;
+        this.content = content;
+    }
 
 }
