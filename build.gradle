@@ -25,6 +25,13 @@ dependencies {
     implementation 'com.google.apis:google-api-services-youtubeAnalytics:v2-rev16-1.23.0'*/
     implementation 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'
 
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.security:spring-security-test'
+
+
 
 }
 
