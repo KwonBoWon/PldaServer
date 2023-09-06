@@ -3,6 +3,7 @@ package me.bowon.springbootdeveloper.controller;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
+import me.bowon.springbootdeveloper.domain.Song;
 import me.bowon.springbootdeveloper.service.BlogService;
 import me.bowon.springbootdeveloper.service.GptService;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +26,7 @@ public class GptTest {
     private final GptService gptService;
     private String data;
     @PostMapping("/post")
-    public List<String> sendQuestion(@RequestBody String request){
+    public List<Song> sendQuestion(@RequestBody String request){
         OpenAiService service = new OpenAiService(apiKey);
         CompletionRequest completionRequest = CompletionRequest.builder()
                 .prompt(request)
