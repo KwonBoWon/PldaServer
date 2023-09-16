@@ -27,27 +27,29 @@ import java.security.GeneralSecurityException;
 @RequestMapping(value = "/youtube")
 public class YoutubeTest {
     @Value("${youtube.api-key}")
-    private String DEVELOPER_KEY = "AIzaSyDkwZaDAkNrnZ-nabEzFe1qe2SDe99WnaY";
+    private String DEVELOPER_KEY;
     @Value("${youtube.application-name}")
     private String APPLICATION_NAME;
     public final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-
     @PostMapping("/post")
-    public ResponseEntity<?> youtubeSearch(@RequestBody String request)
-            throws GeneralSecurityException, IOException, GoogleJsonResponseException {
+    public String youtubeSearch(@RequestBody String request)
+            throws GeneralSecurityException, IOException, GoogleJsonResponseException
+    {
+        System.out.println(DEVELOPER_KEY);
         YoutubeTest youtubeTest = new YoutubeTest();
         YouTube youtubeService = youtubeTest.getService();
+
 
         // Define and execute the API request
         YouTube.Search.List searchRequest = youtubeService.search()
                 .list("snippet");
-        SearchListResponse response = searchRequest.setKey(youtubeTest.DEVELOPER_KEY)
-                .setMaxResults(2L)
+        SearchListResponse response = searchRequest.setKey(DEVELOPER_KEY)
+                .setMaxResults(1L)
                 .setQ(request)
                 .execute();
-        System.out.println(response);
-        return ResponseEntity.ok(response);
+        System.out.println(response.getItems());
+        return response.getItems().toString();
     }
 
 
