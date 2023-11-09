@@ -5,6 +5,7 @@ import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
 import me.bowon.springbootdeveloper.domain.Song;
 import me.bowon.springbootdeveloper.domain.YoutubeData;
+import me.bowon.springbootdeveloper.domain.YoutubeDataList;
 import me.bowon.springbootdeveloper.service.BlogService;
 import me.bowon.springbootdeveloper.service.GptService;
 import me.bowon.springbootdeveloper.service.YoutubeService;
@@ -35,7 +36,7 @@ public class GptTest {
             "Desired Format: 1. song-singer, \n Input: 다음 일기를 보고 노래 3가지를 추천해줘 \n";
     private String data;
     @PostMapping("/post")
-    public List<YoutubeData> sendQuestion(@RequestBody String request) throws GeneralSecurityException, IOException {
+    public YoutubeDataList sendQuestion(@RequestBody String request) throws GeneralSecurityException, IOException {
         OpenAiService service = new OpenAiService(apiKey);
         CompletionRequest completionRequest = CompletionRequest.builder()
                 .prompt(promptFormat + request)
@@ -47,7 +48,8 @@ public class GptTest {
         data = service.createCompletion(completionRequest).getChoices().toString();
         List<Song> songs = gptService.parseSong(data);
         System.out.println(songs);
-        List<YoutubeData> youtubeDataList = youtubeService.youtubeApi(songs);
+        YoutubeDataList youtubeDataList = new YoutubeDataList(youtubeService.youtubeApi(songs));
+        //youtubeDataList.getYoutubeDataList(youtubeService.youtubeApi(songs);
 
         return youtubeDataList;
     }
