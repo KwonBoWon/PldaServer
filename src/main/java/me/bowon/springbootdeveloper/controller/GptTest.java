@@ -11,10 +11,7 @@ import me.bowon.springbootdeveloper.service.GptService;
 import me.bowon.springbootdeveloper.service.YoutubeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import me.bowon.springbootdeveloper.service.BlogService;
 
 import java.io.IOException;
@@ -35,9 +32,9 @@ public class GptTest {
     private final String promptFormat =     // 프롬프트 양식
             "Desired Format: 1. song-singer, \n Input: 다음 일기를 보고 노래 3가지를 추천해줘 \n";
     private String data;
-    @PostMapping("/post")
-    public YoutubeDataList sendQuestion(@RequestBody String request) throws GeneralSecurityException, IOException {
-        OpenAiService service = new OpenAiService(apiKey);
+    @PostMapping(value = "/post", headers = "APIKEY")
+    public YoutubeDataList sendQuestion(@RequestBody String request, @RequestHeader("APIKEY") String userApiKey) throws GeneralSecurityException, IOException {
+        OpenAiService service = new OpenAiService(userApiKey);
         CompletionRequest completionRequest = CompletionRequest.builder()
                 .prompt(promptFormat + request)
                 .model("text-davinci-003")
