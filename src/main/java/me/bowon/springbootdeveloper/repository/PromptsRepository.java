@@ -7,4 +7,9 @@ import java.util.List;
 
 public interface PromptsRepository extends JpaRepository<PromptsEntity, Long> {
     List<PromptsEntity> findTop3ByOrderByFeedbackDesc();
+
+    List<PromptsEntity> findTop4ByOrderByFeedbackDesc();
+
+    PromptsEntity findByFeedback(int feedback);
+
 }

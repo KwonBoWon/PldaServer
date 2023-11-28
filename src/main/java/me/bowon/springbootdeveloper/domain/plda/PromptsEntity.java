@@ -22,4 +22,7 @@ public class PromptsEntity {
     @Column(name = "prompt", nullable = false)
     private String prompt;
 
+    public void addFeedback(int feedback){
+        this.feedback += feedback;
+    }
 }
