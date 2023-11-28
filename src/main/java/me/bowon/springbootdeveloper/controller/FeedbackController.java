@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,8 +22,11 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
     @PostMapping(value = "/post")
-    public void postFeedback(@RequestBody FeedbackPost feedbackPost) throws GeneralSecurityException, IOException {
-        feedbackService.insertFeedback(feedbackPost);
+    public void postFeedback(@RequestBody List<FeedbackPost> feedbackPostList) throws GeneralSecurityException, IOException {
+        for (FeedbackPost feedbackPost : feedbackPostList) {
+            feedbackService.insertFeedback(feedbackPost);
+        }
+
     }
 
 

@@ -24,5 +24,6 @@ public class PromptsEntity {
 
     public void addFeedback(int feedback){
         this.feedback += feedback;
+        System.out.println("###"+feedback+"###\n");
     }
 }

@@ -34,7 +34,8 @@ public class FeedbackService {
         //YourEntity yourEntity = yourEntityRepository.findById(1L).orElse(null);
         PromptsEntity promptsEntity = promptsRepository.findById(id).orElse(null);
         promptsEntity.addFeedback(feedbackdata);
-        System.out.println(promptsEntity);
+        promptsRepository.save(promptsEntity);
+        System.out.println("@@@"+feedbackdata);
     }
 
 
