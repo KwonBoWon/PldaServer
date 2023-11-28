@@ -4,25 +4,20 @@ import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
 import me.bowon.springbootdeveloper.domain.Song;
-import me.bowon.springbootdeveloper.domain.YoutubeData;
 import me.bowon.springbootdeveloper.domain.YoutubeDataList;
-import me.bowon.springbootdeveloper.service.BlogService;
 import me.bowon.springbootdeveloper.service.GptService;
 import me.bowon.springbootdeveloper.service.YoutubeService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import me.bowon.springbootdeveloper.service.BlogService;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/gpt")
-public class GptTest {
+public class GptController {
 
     @Value("${openai.api-key}")
     private String apiKey;
@@ -33,7 +28,7 @@ public class GptTest {
             "Desired Format: 1. song-singer, \n Input: 다음 일기를 보고 노래 3가지를 추천해줘 \n";
     private String data;
     @PostMapping(value = "/post", headers = "APIKEY")
-    public YoutubeDataList sendQuestion(@RequestBody String request, @RequestHeader("APIKEY") String userApiKey) throws GeneralSecurityException, IOException {
+    public YoutubeDataList postQuestion(@RequestBody String request, @RequestHeader("APIKEY") String userApiKey) throws GeneralSecurityException, IOException {
         OpenAiService service = new OpenAiService(userApiKey);
         CompletionRequest completionRequest = CompletionRequest.builder()
                 .prompt(promptFormat + request)

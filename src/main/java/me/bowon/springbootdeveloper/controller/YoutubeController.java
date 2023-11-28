@@ -15,7 +15,6 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +24,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 @RestController
 @RequestMapping(value = "/youtube")
-public class YoutubeTest {
+public class YoutubeController {
     @Value("${youtube.api-key}")
     private String DEVELOPER_KEY;
     @Value("${youtube.application-name}")
@@ -37,7 +36,7 @@ public class YoutubeTest {
             throws GeneralSecurityException, IOException, GoogleJsonResponseException
     {
         System.out.println(DEVELOPER_KEY);
-        YoutubeTest youtubeTest = new YoutubeTest();
+        YoutubeController youtubeTest = new YoutubeController();
         YouTube youtubeService = youtubeTest.getService();
 
 
