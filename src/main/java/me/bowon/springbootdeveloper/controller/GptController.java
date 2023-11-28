@@ -31,7 +31,7 @@ public class GptController {
     PromptsRepository promptsRepository;
 
     private final String promptFormat =     // 프롬프트 양식
-            "Desired Format: 1. song-singer, \n Input: 다음 일기를 보고 노래 3가지를 추천해줘 \n";
+            "Desired Format: 1. song-singer";// \n Input: 다음 일기를 보고 노래 3가지를 추천해줘 \n";
     private String data;
     @PostMapping(value = "/post", headers = "PROMPT")
     public YoutubeDataList postQuestion(@RequestBody String request, @RequestHeader("PROMPT") int prompt_id) throws GeneralSecurityException, IOException {
@@ -39,7 +39,7 @@ public class GptController {
 
         OpenAiService service = new OpenAiService(apiKey);
         CompletionRequest completionRequest = CompletionRequest.builder()
-                .prompt(getPrompt(prompt_id) + request) // 프롬프트 가져오기
+                .prompt(promptFormat + getPrompt(prompt_id) + request) // 프롬프트 가져오기
                 .model("text-davinci-003")
                 .echo(false)
                 .maxTokens(100)
